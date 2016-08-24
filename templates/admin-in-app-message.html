@@ -1,0 +1,299 @@
+{% extends "cms.html" %}
+
+{% block main %}
+
+<div class="row">
+
+	<form id="new_quiz" action="/admin/in_app_message" class="card col s12" enctype="multipart/form-data" method="post">
+		<div class="card-content">
+	      
+	      <h3>Type an in-app-message</h3>
+	      <p>This will appear as scrolling text underneath the media player</p>
+
+	    	<div class="row">
+		        <div class="input-field col s12">
+		          <input id="message" type="text" name="message" class="validate">
+		          <label for="message">Message</label>
+		        </div>
+	      	</div>
+	      	<div class="row">
+		        <div class="input-field col s12">
+		          <input id="link" type="text" name="link" class="validate" placeholder="http://www.example.com">
+		          <label for="link">Sponsor Link</label>
+		        </div>
+	      	</div>
+
+	      	<div class="input-field col s12">
+		    	<select name="region">
+			      	<option value="" disabled selected>Choose a Province</option>
+			      	{% for r in regions %}
+			      		<option value="{{r.key.id()}}">{{r.name}}</option>
+			      	{% endfor %}
+		    	</select>
+		    	<label>Province</label>
+		  	</div>
+
+	      	<div class="row">
+		        <div class="col s12">
+		          Sponsor's image ( a square jpg file works best, consider using <a href="https://tinyjpg.com/">tinyjpg</a> )
+		        </div>
+		          <div class="file-field input-field col s12">
+		          <input class="file-path validate" type="text"/>
+		          <div class="btn">
+		            <span>File</span>
+		            <input type="file" name="image"/>
+		          </div>
+		        </div>
+		    </div>
+
+	      	<div class="row">
+		        <div class="input-field col s12">
+		        	<button class="btn btn-large waves-effect waves-light" type="submit" name="action">
+		        		<div class="loader-icon hide transition">
+		                    <i class="fa fa-spinner fa-spin"></i>
+	                  	</div>
+		        		Save
+				  	</button>
+		        </div>
+	      	</div>
+      	
+      	</div>
+
+    </form>
+
+	{% if messages %}
+    	{% for message in messages %}
+
+		    <form id="new_quiz" action="/admin/in_app_message" class="col s12" enctype="multipart/form-data" method="post">
+
+		      <h3>Type an in-app-message</h3>
+		      <p>This will appear as scrolling text underneath the media player</p>
+
+			    	<div class="row">
+				        <div class="input-field col s12">
+				          <input id="message" type="text" name="message" class="validate" value="{{message.message|check_none}}">
+				          <label for="message">Message</label>
+				        </div>
+			      	</div>
+			      	<div class="row">
+				        <div class="input-field col s12">
+				          <input id="link" type="text" name="link" class="validate" value="{{message.link|check_none}}" placeholder="http://www.example.com">
+				          <label for="link">Sponsor Link</label>
+				        </div>
+			      	</div>
+
+			      	<div class="input-field col s12">
+				    	<select name="region">
+			    		{% if message.region %}
+			    			<option value="{{message.region.id()}}">{{message.region.get().name}}</option>
+			    		{% else %}
+				      		<option value="" disabled selected>Choose a Province</option>
+				      	{% endif %}
+				      	{% for r in regions %}
+				      		<option value="{{r.key.id()}}">{{r.name}}</option>
+				      	{% endfor %}
+				    	</select>
+				    	<label>Province</label>
+				  	</div>
+
+			      	<div class="row">
+			      		{% if message.image %}
+					        <div class="col s12">
+					          	<div class="card">
+						            <div class="card-image sponsor-image-preview cetner">
+						              <img src="{{message.image}}">
+						            </div>
+					          	</div>
+					        </div>
+
+			      			<div class="col s12 center">
+			      				<input type="checkbox" id="remove_image" name="remove_image" value="yes" />
+			      				<label for="remove_image">Remove Image</label>
+			      			</div>
+			      		{% endif %}
+				        <div class="col s12">
+				          Sponsor's image ( a square jpg file works best, consider using <a href="https://tinyjpg.com/">tinyjpg</a> )
+				        </div>
+				          <div class="file-field input-field col s12">
+				          <input class="file-path validate" type="text"/>
+				          <div class="btn">
+				            <span>File</span>
+				            <input type="file" name="image"/>
+				          </div>
+				        </div>
+				    </div>
+
+			    <input type="hidden" name="message_id" value="{{message.key.id()}}"></input>
+
+		      	<div class="row">
+			        <div class="input-field col s12">
+			        	<button class="btn btn-large waves-effect waves-light" type="submit" name="action">
+			        		<div class="loader-icon hide transition">
+			                    <i class="fa fa-spinner fa-spin"></i>
+		                  	</div>
+			        		Save
+					  	</button>
+			        </div>
+		      	</div>
+
+		    </form>
+
+		    <form method="post" action="/admin/in_app_message">
+		    	<input type="hidden" name="delete_message" value="{{message.key.id()}}">
+		    	<div class="row">
+			        <div class="input-field col s12 right-align">
+			        	<button class="btn waves-effect waves-light" type="submit" name="action">
+			        		<div class="loader-icon hide transition">
+			                    <i class="fa fa-spinner fa-spin"></i>
+		                  	</div>
+			        		Delete
+					  	</button>
+			        </div>
+		      	</div>
+		    </form>
+
+    	{% endfor %}
+	{% endif %}
+  </div>
+
+
+
+
+<!-- 
+
+<div class="row">
+	        <div class="input-field col s12">
+	          <input id="message" type="text" name="message" class="validate">
+	          <label for="message">Message</label>
+	        </div>
+      	</div>
+      	<div class="row">
+	        <div class="input-field col s12">
+	          <input id="link" type="text" name="link" class="validate" placeholder="http://www.example.com">
+	          <label for="link">Sponsor Link</label>
+	        </div>
+      	</div>
+
+      	<div class="row">
+	        <div class="col s12">
+	          Sponsor's image ( a square jpg file works best, consider using <a href="https://tinyjpg.com/">tinyjpg</a> )
+	        </div>
+	          <div class="file-field input-field col s12">
+	          <input class="file-path validate" type="text"/>
+	          <div class="btn">
+	            <span>File</span>
+	            <input type="file" name="image"/>
+	          </div>
+	        </div>
+	    </div>
+
+ -->
+
+
+
+
+<!-- <div class="row">
+    <form id="new_quiz" action="/admin/in_app_message" class="col s12" enctype="multipart/form-data" method="post">
+
+      <h3>Type an in-app-message</h3>
+      <p>This will appear as scrolling text underneath the media player</p>
+
+    	{% if messages %}
+	    	{% for message in messages %}
+
+	    	<div class="row">
+		        <div class="input-field col s12">
+		          <input id="message" type="text" name="message" class="validate" value="{{message.message|check_none}}">
+		          <label for="message">Message</label>
+		        </div>
+	      	</div>
+	      	<div class="row">
+		        <div class="input-field col s12">
+		          <input id="link" type="text" name="link" class="validate" value="{{message.link|check_none}}" placeholder="http://www.example.com">
+		          <label for="link">Sponsor Link</label>
+		        </div>
+	      	</div>
+
+	      	<div class="input-field col s12">
+		    	<select name="region">
+		      	<option value="" disabled selected>Choose a Province</option>
+		      	{% for r in regions %}
+		      		<option value="{{r.key.id()}}">{{r.name}}</option>
+		      	{% endfor %}
+		    	</select>
+		    	<label>Province</label>
+		  	</div>
+
+	      	<div class="row">
+	      		{% if message.image %}
+			        <div class="col s12">
+			          	<div class="card">
+				            <div class="card-image sponsor-image-preview cetner">
+				              <img src="{{message.image}}">
+				            </div>
+			          	</div>
+			        </div>
+
+	      			<div class="col s12 center">
+	      				<input type="checkbox" id="remove_image" name="remove_image" value="yes" />
+	      				<label for="remove_image">Remove Image</label>
+	      			</div>
+	      		{% endif %}
+		        <div class="col s12">
+		          Sponsor's image ( a square jpg file works best, consider using <a href="https://tinyjpg.com/">tinyjpg</a> )
+		        </div>
+		          <div class="file-field input-field col s12">
+		          <input class="file-path validate" type="text"/>
+		          <div class="btn">
+		            <span>File</span>
+		            <input type="file" name="image"/>
+		          </div>
+		        </div>
+		    </div>
+
+		    {% endfor %}
+		{% else %}
+
+		<div class="row">
+	        <div class="input-field col s12">
+	          <input id="message" type="text" name="message" class="validate">
+	          <label for="message">Message</label>
+	        </div>
+      	</div>
+      	<div class="row">
+	        <div class="input-field col s12">
+	          <input id="link" type="text" name="link" class="validate" placeholder="http://www.example.com">
+	          <label for="link">Sponsor Link</label>
+	        </div>
+      	</div>
+
+      	<div class="row">
+	        <div class="col s12">
+	          Sponsor's image ( a square jpg file works best, consider using <a href="https://tinyjpg.com/">tinyjpg</a> )
+	        </div>
+	          <div class="file-field input-field col s12">
+	          <input class="file-path validate" type="text"/>
+	          <div class="btn">
+	            <span>File</span>
+	            <input type="file" name="image"/>
+	          </div>
+	        </div>
+	    </div>
+
+		{% endif %}
+
+      	<div class="row">
+	        <div class="input-field col s12">
+	        	<button class="btn btn-large waves-effect waves-light" type="submit" name="action">
+	        		<div class="loader-icon hide transition">
+	                    <i class="fa fa-spinner fa-spin"></i>
+                  	</div>
+	        		Save
+			  	</button>
+	        </div>
+      	</div>
+
+    </form>
+  </div> -->
+
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends "cms.html" %}
+
+{% block main %}
+
+<div class="row">
+    <form id="new_quiz" action="/admin/add_region" class="col s12" enctype="multipart/form-data" method="post">
+
+      <h3>Add a Province</h3>
+
+    	{% if region %}
+
+    	<div class="row">
+	        <div class="input-field col s12">
+	          <input id="name" type="text" name="name" class="validate" value="{{region.name}}">
+	          <label for="name" class="active">Name</label>
+	        </div>
+    	</div>
+
+		{% else %}
+
+		<div class="row">
+	        <div class="input-field col s12">
+	          <input id="name" type="text" name="name" class="validate">
+	          <label for="name">Name</label>
+	        </div>
+      	</div>
+
+		{% endif %}
+
+      	<div class="row">
+	        <div class="input-field col s12">
+	        	<button class="btn btn-large waves-effect waves-light" type="submit" name="action">
+	        		<div class="loader-icon hide transition">
+                <i class="fa fa-spinner fa-spin"></i>
+              </div>
+              Save
+			  	</button>
+	        </div>
+      	</div>
+
+    </form>
+  </div>
+
+{% if regions %}
+  <table class="striped">
+    <thead>
+      <tr>
+          <th data-field="id">Province</th>
+          <th data-field="add"></th>
+          <th data-field="edit"></th>
+          <th data-field="delete"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for r in regions %}
+      <tr>
+        <td>{{r.name}}</td>
+        <td><a href="/admin/add_school/{{r.key.id()}}" class="waves-effect waves-light btn">Add School</a></td>
+        <td>
+          <a href="/admin/add_region?region_id={{r.key.id()}}" class="waves-effect waves-light btn">Edit</a>
+        </td>
+        <td>
+          <form action="/admin/delete_region" method="post" class="inline-form center">
+            <input type="hidden" name="delete_id" value="{{r.key.id()}}">
+            <button class="btn waves-effect waves-light" type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+{% endblock %}

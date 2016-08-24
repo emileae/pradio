@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <title>Podradio Mobile</title>
+
+  <!-- SEO stuff -->
+  <link href="https://emile.me/" rel="canonical" />
+  {% block seo_description %}
+  <meta name="description" content="Podradio for the win!">
+  {% endblock %}
+
+  <!-- Social -->
+
+  <meta property="og:title" content="Podradio" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://podradio.co.za/" />
+  <meta property="og:image" content="/img/podradio-logo.png" />
+  <meta property="og:description" content="Podradio for the win!" />
+  <meta property="og:site_name" content="Podradio Mobile" />
+  <!-- <meta property="fb:app_id" content="Your FB_APP_ID" /> -->
+
+  <!-- Fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Lato:300,400,300italic&Josefin+Slab:300' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/static/font/font-awesome/css/font-awesome.min.css">
+
+  <!-- favicon -->
+  <link rel="shortcut icon" href="/static/img/podradio-logo.png" />
+
+
+  <!-- CSS  -->
+  <link href="/static/stylesheets/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+  <!-- Google Analytics -->
+
+  {% block style %}
+  {% endblock %}
+
+</head>
+<body>
+<header>
+
+</header>
+<main>
+{% block main %}
+  <div class="row valign-wrapper" style="height: 100vh;background-color: #000;">
+    <div class="col s12 center valign">
+      <img src="/static/img/podradio-logo.png" style="max-height:300px;">
+      <br>
+      <a href="/admin" class="white-text">Admin</a>
+    </div>
+  </div>
+{% endblock %}
+</div>
+</main>
+
+  <!--  Scripts-->
+  <!--<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>-->
+  <script type="text/javascript" src="/static/js/jquery.js"></script>
+  <script src="/static/js/materialize.min.js"></script>
+  <script src="/static/js/init.js"></script>
+  <script type="text/javascript" src="/static/js/ajax.js"></script>
+
+  <script type="text/javascript">
+
+  </script>
+
+  {% block script %}
+
+  <script type="text/javascript">
+  </script>
+
+  {% endblock %}
+
+  </body>
+</html>

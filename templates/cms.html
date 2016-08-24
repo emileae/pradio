@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <title>Podradio</title>
+
+  <!-- Fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Lato:300,400,300italic&Josefin+Slab:300' rel='stylesheet' type='text/css'>
+  <!-- <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"> -->
+  <link rel="stylesheet" href="/static/font/font-awesome/css/font-awesome.min.css">
+
+  <!-- Medium Editor -->
+  <link rel="stylesheet" href="/static/admin/medium-editor/dist/css/medium-editor.min.css">
+
+  <!-- Dropzone file uploader -->
+  <!-- <link rel="stylesheet" href="/static/admin/dropzone/dropzone.min.css" -->
+
+  <!-- CSS  -->
+  <link href="/static/stylesheets/materializecms.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="/static/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
+  <!--<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '530630063755270',
+      xfbml      : true,
+      version    : 'v2.4'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>-->
+
+<main>
+  <ul id="slide-out" class="side-nav">
+    <li><a href="/admin">Home</a></li>
+    <!-- <li><a href="/admin/add_podcast">New Podcast</a></li> -->
+    <li><a href="/admin/in_app_message">In-App Message</a></li>
+    <!-- <li><a href="/admin/quiz/add_school">Add a School</a></li> -->
+    <li><a href="/admin/add_region">Provinces</a></li>
+    <li><a href="/admin/emails">Email List</a></li>
+  </ul>
+  <a id="nav-slide-out-icon" href="#" data-activates="slide-out" class="button-collapse show-on-large"><i class="mdi-navigation-menu"></i></a>
+
+
+  <div class="container">
+    <div id="main" class="section scrollspy">
+      <div class="row">
+        <div class="col s12 m12 l12">
+          {% block main %}
+            <h5>Quick links</h5>
+            <div class="row">
+              <div class="col s12">
+                <a href="/admin/add_region" class="waves-effect waves-light btn">Select Province</a>
+                <a href="/admin/emails" class="waves-effect waves-light btn">Emails</a>
+                <a href="/admin/in_app_message" class="waves-effect waves-light btn">In-App message</a>
+              </div>
+            </div>
+
+            <h5>Basic Stats</h5>
+            <div class="row">
+              <div class="card s12 blue-grey darken-1">
+                <div class="card-content white-text">
+                  <span class="card-title">Registrations</span>
+                  <p>{{counter.registrations}}</p>
+                </div>
+              </div>
+              <div class="card s12 blue-grey darken-1">
+                <div class="card-content white-text">
+                  <span class="card-title">Downloads</span>
+                  <p>{{counter.podcast_downloads}}</p>
+                </div>
+              </div>
+              <div class="card s12 blue-grey darken-1">
+                <div class="card-content white-text">
+                  <span class="card-title">Plays</span>
+                  <p>{{counter.podcast_plays}}</p>
+                </div>
+              </div>
+            </div>
+          {% endblock %}
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</main>
+
+  <footer class="page-footer grey darken-2 text-white">
+    <div class="container center">
+      <div class="row">
+        <div class="col l12 m12 s12">
+          <div class="white-text">The footer</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="footer-copyright">
+      <div class="container center">
+      &copy; <a href="http://emile.me">emile.me</a> {{year}}
+      </div>
+    </div>
+  </footer>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="/static/js/materialize.min.js"></script>
+  <script src="/static/admin/medium-editor/dist/js/medium-editor.min.js"></script>
+  <!-- Dropzone file uploader -->
+  <!-- <script src="/static/admin/dropzone/dropzone.min.js"></script> -->
+  <script src="/static/js/cmsinit.js"></script>
+  <script src="/static/js/cmsajax.js"></script>
+
+
+  {% block script %}
+
+  <!--<script type="text/javascript">
+    $('body').on('click', "#send_mailer", function(e){
+      e.preventDefault();
+      function success(){
+        alert("mailer sent!");
+      };
+      $.ajax({
+        url: "/admin/send_mailer",
+        type: "post",
+        data: {},
+        success: success
+      }).fail(function(){
+        alert("failed to send mailer");
+      });
+    });
+  </script>-->
+
+  {% endblock %}
+
+  </body>
+</html>

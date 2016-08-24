@@ -1,0 +1,223 @@
+{% extends "cms.html" %}
+
+{% block main %}
+
+<div class="row">
+    <form id="new_quiz" action="/admin/add_podcast/{{school.key.id()}}" class="col s12" enctype="multipart/form-data" method="post">
+
+    	<h3>Add Podcast - {{school.name}}</h3>
+
+    	<div class="row">
+        <div class="col s12 center">
+          <a href="/admin/add_school/{{school.region.id()}}">Back - Add Podcast</a>
+        </div>
+      </div>
+
+    	{% if podcast %}
+
+    	<div class="row">
+	        <div class="input-field col s12">
+	          <input id="title" type="text" name="title" class="validate" value="{{podcast.title}}">
+	          <label for="title" class="active">Title</label>
+	        </div>
+      	</div>
+
+      	<div class="row">
+	        <div class="input-field col s12">
+	          	<textarea id="description" name="description" class="materialize-textarea">{{podcast.description}}</textarea>
+	  			<label for="description" class="active">Description</label>
+	        </div>
+      	</div>
+
+      	<div class="row">
+	        <div class="input-field col s12">
+	          <input id="share_url" type="text" name="share_url" class="validate" value="{{podcast.share_url}}" placeholder="http://www.podradio.co.za/...">
+	          <label for="share_url" class="active">Share Link</label>
+	        </div>
+      	</div>
+
+      	<!-- <div class="input-field col s12">
+		    <select name="category">
+		      <option value="" disabled>Choose a region</option>
+		      {% if podcast.region %}
+		      	<option value="{{podcast.region.get().key.id()}}" selected>{{podcast.region.get().name}}</option>
+		      {% endif %}
+		      {% for r in regions %}
+		      	<option value="{{r.key.id()}}">{{r.name}}</option>
+		      {% endfor %}
+		    </select>
+		    <label>Region</label>
+	  	</div>
+
+	  	<div class="input-field col s12">
+		    <select name="category">
+		      <option value="" disabled>Choose a school</option>
+		      {% if podcast.school %}
+		      	<option value="{{podcast.school.get().key.id()}}" selected>{{podcast.school.get().name}}</option>
+		      {% endif %}
+		      {% for s in schools %}
+		      	<option value="{{s.key.id()}}">{{s.name}}</option>
+		      {% endfor %}
+		    </select>
+		    <label>School</label>
+	  	</div> -->
+
+	  	<div class="row">
+	  		<div class="col s12">
+	  			Podcast (.mp3 files only at this time)<br>
+	  			{% if podcast.download_link %}
+	  				<a href="{{podcast.download_link}}" target="_blank">preview here</a>
+	  			{% endif %}
+	  		</div>
+		      <div class="file-field input-field col s12">
+			      <input class="file-path validate" type="text"/>
+			      <div class="btn">
+			        <span>File</span>
+			        <input type="file" name="audio"/>
+			      </div>
+			  </div>
+		</div>
+
+		<input type="hidden" name="podcast_id" value="{{podcast.key.id()}}">
+
+		{% else %}
+
+		<div class="row">
+	        <div class="input-field col s12">
+	          <input id="title" type="text" name="title" class="validate">
+	          <label for="title">Title</label>
+	        </div>
+      	</div>
+
+      	<div class="row">
+	        <div class="input-field col s12">
+	          	<textarea id="description" name="description" class="materialize-textarea"></textarea>
+	  			<label for="description">Description</label>
+	        </div>
+      	</div>
+
+      	<div class="row">
+	        <div class="input-field col s12">
+	          <input id="share_url" type="text" name="share_url" class="validate" placeholder="http://www.podradio.co.za/...">
+	          <label for="share_url">Share Link</label>
+	        </div>
+      	</div>
+
+      	<!-- <div class="input-field col s12">
+		    <select name="category">
+		      <option value="" disabled>Choose a region</option>
+		      {% for r in regions %}
+		      	<option value="{{r.key.id()}}">{{r.name}}</option>
+		      {% endfor %}
+		    </select>
+		    <label>Region</label>
+	  	</div>
+
+	  	<div class="input-field col s12">
+		    <select name="category">
+		      <option value="" disabled>Choose a school</option>
+		      {% for s in schools %}
+		      	<option value="{{s.key.id()}}">{{s.name}}</option>
+		      {% endfor %}
+		    </select>
+		    <label>School</label>
+	  	</div> -->
+
+	  	<div class="row">
+	  		<div class="col s12">
+	  			Podcast (.mp3 files only at this time)
+	  		</div>
+	      	<div class="file-field input-field col s12">
+		      <input class="file-path validate" type="text"/>
+		      <div class="btn">
+		        <span>File</span>
+		        <input type="file" name="audio"/>
+		      </div>
+		  	</div>
+		</div>
+
+		{% endif %}
+
+      	<div class="row">
+	        <div class="input-field col s12">
+	        	<button class="btn btn-large waves-effect waves-light" type="submit" name="action">
+	        		<div class="loader-icon hide transition">
+	                    <i class="fa fa-spinner fa-spin"></i>
+                  	</div>
+	        		Save
+			  	</button>
+	        </div>
+      	</div>
+
+    </form>
+  </div>
+
+	<!-- {% if podcast %}
+  	<div class="row">
+  		<div class="col s12 right-align">
+  			<form action="/admin/delete_podcast" method="post" class="right-align">
+  				<input type="hidden" name="delete_id" value="{{podcast.key.id()}}">
+  				<button class="btn btn-large waves-effect waves-light" type="submit">Delete - {{podcast.title}}</button>
+  			</form>
+  		</div>
+  	</div>
+  	{% endif %} -->
+
+  <!-- {% if podcasts %}
+  <div class="row">
+  	<div class="col s12">
+		<h5>Other podcasts for this school</h5>
+  		{% for p in podcasts %}
+  			<a href="/admin/add_podcast/{{school.key.id()}}?podcast_id={{p.key.id()}}">Edit podcast - {{p.title}}</a><br>
+  		{% endfor %}
+  	</div>
+  </div>
+  {% endif %} -->
+
+  {% if podcasts %}
+  <table class="striped">
+    <thead>
+      <tr>
+          <th data-field="id">Podcast</th>
+          <th data-field="downloads">Downloads</th>
+          <th data-field="plays">Plays</th>
+          <th data-field="edit"></th>
+          <th data-field="delete"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for p in podcasts %}
+      <tr>
+        <td>{{p.title}}</td>
+        <td>
+        	{% if p.downloads %}
+        		{{p.downloads}}
+    		{% else %}
+    			-
+        	{% endif %}
+        </td>
+        <td>
+        	{% if p.plays %}
+        		{{p.plays}}
+    		{% else %}
+    			-
+        	{% endif %}
+        </td>
+        <td>
+          <a href="/admin/add_podcast/{{school.key.id()}}?podcast_id={{p.key.id()}}" class="btn waves-effect waves-light">Edit</a>
+        </td>
+        <td>
+          	<form action="/admin/delete_podcast" method="post" class="right-align">
+  				<input type="hidden" name="delete_id" value="{{p.key.id()}}">
+  				<button class="btn waves-effect waves-light" type="submit">Delete</button>
+  			</form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+
+{% endblock %}
